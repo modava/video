@@ -22,10 +22,27 @@ class VideoCategoryTable extends \yii\db\ActiveRecord
         return new VideoCategoryQuery(get_called_class());
     }
 
+    public static function getAllVideoCategory($lang = null)
+    {
+        $cache = Yii::$app->cache;
+        $key = 'redis-get-all-video-category-' . $lang;
+
+        $data = $cache->get($key);
+
+        if ($data === false) {
+            $data = self::find()->where(['language' => $lang])->published()->sortDescById()->all();
+            $cache->set($key, $data, Time::SECONDS_IN_A_MONTH);
+        }
+
+        return $data;
+    }
+
     public function afterDelete()
     {
         $cache = Yii::$app->cache;
-        $keys = [];
+        $keys = [
+            'redis-get-all-video-category-' . $this->language,
+        ];
         foreach ($keys as $key) {
             $cache->delete($key);
         }
@@ -35,7 +52,9 @@ class VideoCategoryTable extends \yii\db\ActiveRecord
     public function afterSave($insert, $changedAttributes)
     {
         $cache = Yii::$app->cache;
-        $keys = [];
+        $keys = [
+            'redis-get-all-video-category-' . $this->language,
+        ];
         foreach ($keys as $key) {
             $cache->delete($key);
         }

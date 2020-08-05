@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </h4>
         <p>
             <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
-                title="<?= VideoModule::t('video', 'Create'); ?>">
+               title="<?= VideoModule::t('video', 'Create'); ?>">
                 <i class="fa fa-plus"></i> <?= VideoModule::t('video', 'Create'); ?></a>
             <?= Html::a(VideoModule::t('video', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
             <?= Html::a(VideoModule::t('video', 'Delete'), ['delete', 'id' => $model->id], [
@@ -47,32 +47,49 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= DetailView::widget([
                     'model' => $model,
                     'attributes' => [
-						'id',
-						'title',
-						'slug',
-						'video_type',
-						'video_category',
-						'image',
-						'description:ntext',
-						'content:ntext',
-						'position',
-						'ads_pixel:ntext',
-						'ads_session:ntext',
+                        'id',
+                        'title',
+                        'slug',
+                        [
+                            'attribute' => 'videoType.title',
+                            'label' => VideoModule::t('video', 'Thể loại')
+                        ],
+                        [
+                            'attribute' => 'videoCategory.title',
+                            'label' => VideoModule::t('video', 'Danh mục')
+                        ],
+                        [
+                            'attribute' => 'image',
+                            'format' => 'html',
+                            'value' => function ($model) {
+                                if ($model->image == null) {
+                                    return Html::img('/uploads/video/150x150/no-image.png', ['width' => 150, 'height' => 150]);
+                                }
+                                return Html::img('/uploads/video/150x150/' . $model->image);
+                            },
+                        ],
+                        'description:html',
+                        'content:html',
+                        'position',
+                        'ads_pixel:html',
+                        'ads_session:html',
                         [
                             'attribute' => 'status',
                             'value' => function ($model) {
                                 return Yii::$app->getModule('video')->params['status'][$model->status];
                             }
                         ],
-						'views',
+                        'views',
                         [
                             'attribute' => 'language',
                             'value' => function ($model) {
+                                if ($model->language == null)
+                                    return null;
                                 return Yii::$app->getModule('video')->params['availableLocales'][$model->language];
                             },
                         ],
-						'created_at',
-						'updated_at',
+                        'created_at:datetime',
+                        'updated_at:datetime',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
                             'label' => VideoModule::t('video', 'Created By')

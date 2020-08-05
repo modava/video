@@ -105,14 +105,32 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 ]);
                                             }
                                         ],
-                                    
-										'title',
-										'image',
-										'description',
-										'position',
-										'ads_pixel:ntext',
+
+                                        [
+                                            'attribute' => 'image',
+                                            'format' => 'html',
+                                            'value' => function ($model) {
+                                                if ($model->image == null) {
+                                                    return Html::img('/uploads/video-type/150x150/no-image.png', ['width' => 150, 'height' => 150]);
+                                                }
+                                                return Html::img('/uploads/video-type/150x150/' . $model->image);
+                                            },
+                                            'headerOptions' => [
+                                                'width' => 150,
+                                            ],
+                                        ],
+										'description:html',
+//										'position',
 										//'ads_session:ntext',
-										//'language',
+                                        [
+                                            'attribute' => 'language',
+                                            'value' => function ($model) {
+                                                return Yii::$app->getModule('video')->params['availableLocales'][$model->language];
+                                            },
+                                            'headerOptions' => [
+                                                'width' => 150,
+                                            ],
+                                        ],
                                         [
                                             'attribute' => 'created_by',
                                             'value' => 'userCreated.userProfile.fullname',

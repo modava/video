@@ -13,37 +13,37 @@ use modava\video\VideoModule;
 <?= ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
 <div class="video-type-form">
     <?php $form = ActiveForm::begin(); ?>
-		<?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
-
-		<?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
-
-		<?= $form->field($model, 'image')->textInput(['maxlength' => true]) ?>
-
-		<?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
-
-		<?= $form->field($model, 'position')->textInput() ?>
-
-		<?= $form->field($model, 'ads_pixel')->textarea(['rows' => 6]) ?>
-
-		<?= $form->field($model, 'ads_session')->textarea(['rows' => 6]) ?>
-
-		<?= $form->field($model, 'status')->textInput() ?>
-
-		<?= $form->field($model, 'language')->textInput(['maxlength' => true]) ?>
-
-		<?= $form->field($model, 'created_at')->textInput() ?>
-
-		<?= $form->field($model, 'updated_at')->textInput() ?>
-
-		<?= $form->field($model, 'created_by')->textInput() ?>
-
-		<?= $form->field($model, 'updated_by')->textInput() ?>
-
-		<?php if (Yii::$app->controller->action->id == 'create') $model->status = 1; ?>
-		<?= $form->field($model, 'status')->checkbox() ?>
-        <div class="form-group">
-            <?= Html::submitButton(VideoModule::t('video', 'Save'), ['class' => 'btn btn-success']) ?>
+    <div class="row">
+        <div class="col-8">
+            <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
         </div>
+        <div class="col-4">
+            <?= $form->field($model, 'language')->dropDownList(Yii::$app->getModule('video')->params['availableLocales'], ['prompt' => VideoModule::t('video', 'Chọn ngôn ngữ...')]) ?>
+        </div>
+    </div>
+
+    <?= $form->field($model, 'description')->widget(\modava\tiny\TinyMce::class, []) ?>
+
+
+    <?php
+    if (empty($model->getErrors()))
+        $path = Yii::$app->params['video-type']['150x150']['folder'];
+    else
+        $path = null;
+
+    echo \modava\tiny\FileManager::widget([
+        'model' => $model,
+        'attribute' => 'image',
+        'path' => $path,
+        'label' => VideoModule::t('video', 'Hình ảnh') . ': ',
+    ]); ?>
+
+
+    <?php if (Yii::$app->controller->action->id == 'create') $model->status = 1; ?>
+    <?= $form->field($model, 'status')->checkbox() ?>
+    <div class="form-group">
+        <?= Html::submitButton(VideoModule::t('video', 'Save'), ['class' => 'btn btn-success']) ?>
+    </div>
 
     <?php ActiveForm::end(); ?>
 </div>

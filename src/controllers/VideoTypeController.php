@@ -2,6 +2,7 @@
 
 namespace modava\video\controllers;
 
+use modava\video\components\MyUpload;
 use yii\db\Exception;
 use Yii;
 use yii\helpers\Html;
@@ -18,8 +19,8 @@ use modava\video\models\search\VideoTypeSearch;
 class VideoTypeController extends MyVideoController
 {
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function behaviors()
     {
         return [
@@ -33,9 +34,9 @@ class VideoTypeController extends MyVideoController
     }
 
     /**
-    * Lists all VideoType models.
-    * @return mixed
-    */
+     * Lists all VideoType models.
+     * @return mixed
+     */
     public function actionIndex()
     {
         $searchModel = new VideoTypeSearch();
@@ -45,16 +46,15 @@ class VideoTypeController extends MyVideoController
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-            }
-
+    }
 
 
     /**
-    * Displays a single VideoType model.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Displays a single VideoType model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -63,22 +63,40 @@ class VideoTypeController extends MyVideoController
     }
 
     /**
-    * Creates a new VideoType model.
-    * If creation is successful, the browser will be redirected to the 'view' page.
-    * @return mixed
-    */
+     * Creates a new VideoType model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
     public function actionCreate()
     {
         $model = new VideoType();
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate() && $model->save()) {
-                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
-                    'title' => 'Thông báo',
-                    'text' => 'Tạo mới thành công',
-                    'type' => 'success'
-                ]);
-                return $this->redirect(['view', 'id' => $model->id]);
+                if ($model->save()) {
+                    $imageName = null;
+                    if ($model->image != "") {
+                        $pathImage = FRONTEND_HOST_INFO . $model->image;
+                        $path = Yii::getAlias('@frontend/web/uploads/video-type/');
+                        foreach (Yii::$app->params['video-type'] as $key => $value) {
+                            $pathSave = $path . $key;
+                            if (!file_exists($pathSave) && !is_dir($pathSave)) {
+                                mkdir($pathSave);
+                            }
+                            $imageName = MyUpload::uploadFromOnline($value['width'], $value['height'], $pathImage, $pathSave . '/', $imageName);
+                        }
+
+                    }
+
+                    $model->image = $imageName;
+                    $model->updateAttributes(['image']);
+                    Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
+                        'title' => 'Thông báo',
+                        'text' => 'Tạo mới thành công',
+                        'type' => 'success'
+                    ]);
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
             } else {
                 $errors = Html::tag('p', 'Tạo mới thất bại');
                 foreach ($model->getErrors() as $error) {
@@ -98,19 +116,36 @@ class VideoTypeController extends MyVideoController
     }
 
     /**
-    * Updates an existing VideoType model.
-    * If update is successful, the browser will be redirected to the 'view' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Updates an existing VideoType model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            if($model->validate()) {
+            $imgOld = $model->getOldAttribute('image');
+            if ($model->validate()) {
                 if ($model->save()) {
+                    $imageName = null;
+                    if ($model->image != "") {
+                        if ($model->image != $imgOld) {
+                            $pathImage = FRONTEND_HOST_INFO . $model->image;
+                            $path = Yii::getAlias('@frontend/web/uploads/video-type/');
+                            foreach (Yii::$app->params['video-type'] as $key => $value) {
+                                $pathSave = $path . $key;
+                                if (!file_exists($pathSave) && !is_dir($pathSave)) {
+                                    mkdir($pathSave);
+                                }
+                                $imageName = MyUpload::uploadFromOnline($value['width'], $value['height'], $pathImage, $pathSave . '/', $imageName);
+                            }
+                            $model->image = $imageName;
+                            $model->updateAttributes(['image']);
+                        }
+                    }
                     Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                         'title' => 'Thông báo',
                         'text' => 'Cập nhật thành công',
@@ -137,12 +172,12 @@ class VideoTypeController extends MyVideoController
     }
 
     /**
-    * Deletes an existing VideoType model.
-    * If deletion is successful, the browser will be redirected to the 'index' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Deletes an existing VideoType model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
@@ -175,12 +210,12 @@ class VideoTypeController extends MyVideoController
     }
 
     /**
-    * Finds the VideoType model based on its primary key value.
-    * If the model is not found, a 404 HTTP exception will be thrown.
-    * @param integer $id
-    * @return VideoType the loaded model
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Finds the VideoType model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return VideoType the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
 
 
     protected function findModel($id)
