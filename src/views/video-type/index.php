@@ -113,7 +113,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 if ($model->image == null) {
                                                     return Html::img('/uploads/video-type/150x150/no-image.png', ['width' => 150, 'height' => 150]);
                                                 }
-                                                return Html::img('/uploads/video-type/150x150/' . $model->image);
+                                                return Html::img(Yii::$app->params['video-type']['150x150']['folder'] . $model->image);
                                             },
                                             'headerOptions' => [
                                                 'width' => 150,
