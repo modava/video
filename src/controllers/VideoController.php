@@ -156,7 +156,15 @@ class VideoController extends MyVideoController
                                 $imageName = MyUpload::uploadFromOnline($value['width'], $value['height'], $pathImage, $pathSave . '/', $imageName);
                             }
                             $model->image = $imageName;
-                            $model->updateAttributes(['image']);
+                            if ($model->updateAttributes(['image'])) {
+                                foreach (Yii::$app->params['video'] as $key => $value) {
+                                    $pathSave = $path . $key;
+                                    if (file_exists($pathSave . '/' . $imgOld) && $imgOld != null) {
+                                        unlink($pathSave . '/' . $imgOld);
+                                    }
+
+                                }
+                            }
                         }
                     }
                     Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
