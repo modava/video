@@ -18,7 +18,7 @@ use modava\video\VideoModule;
             <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-4">
-            <?= $form->field($model, 'language')->dropDownList(Yii::$app->getModule('video')->params['availableLocales'], ['prompt' => VideoModule::t('video', 'Chọn ngôn ngữ...')]) ?>
+            <?= $form->field($model, 'language')->dropDownList(Yii::$app->params['availableLocales'], ['prompt' => VideoModule::t('video', 'Chọn ngôn ngữ...')]) ?>
         </div>
     </div>
 

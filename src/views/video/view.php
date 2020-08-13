@@ -85,7 +85,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'value' => function ($model) {
                                 if ($model->language == null)
                                     return null;
-                                return Yii::$app->getModule('video')->params['availableLocales'][$model->language];
+                                return Yii::$app->params['availableLocales'][$model->language];
                             },
                         ],
                         'created_at:datetime',
