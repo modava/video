@@ -25,4 +25,8 @@ class VideoQuery extends \yii\db\ActiveQuery
     {
         return $this->orderBy([Video::tableName() . '.id' => SORT_DESC]);
     }
+    public function findByLanguage()
+    {
+        return $this->andWhere([Video::tableName() . '.language' => \Yii::$app->language]);
+    }
 }
