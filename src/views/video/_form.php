@@ -58,7 +58,7 @@ use modava\video\models\table\VideoTypeTable;
             'model' => $model,
             'attribute' => 'image',
             'path' => $path,
-            'label' => VideoModule::t('video', 'Hình ảnh') . ': ',
+            'label' => VideoModule::t('video', 'Hình ảnh') . ': ' . Yii::$app->params['video-size'],
         ]); ?>
 
         <?php if (Yii::$app->controller->action->id == 'create') $model->status = 1; ?>

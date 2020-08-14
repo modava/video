@@ -35,7 +35,7 @@ use modava\video\VideoModule;
         'model' => $model,
         'attribute' => 'image',
         'path' => $path,
-        'label' => VideoModule::t('video', 'Hình ảnh') . ': ',
+        'label' => VideoModule::t('video', 'Hình ảnh') . ': ' . Yii::$app->params['video-type-size'],
     ]); ?>
 
 
