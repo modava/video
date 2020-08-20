@@ -22,7 +22,7 @@ class m200804_085555_create_talbe_video extends Migration
             'title' => $this->string(255)->notNull(),
             'slug' => $this->string(255)->notNull()->unique(),
             'link' => $this->string(255)->null(),
-            'type' => $this->tinyInteger(11)->notNull()->defaultValue(1),
+            'type' => $this->integer(11)->notNull()->defaultValue(1),
             'video_type' => $this->integer(11)->null(),
             'video_category' => $this->integer(11)->null(),
             'image' => $this->string(255)->null(),
