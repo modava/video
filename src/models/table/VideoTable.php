@@ -2,15 +2,16 @@
 
 namespace modava\video\models\table;
 
-use cheatsheet\Time;
 use modava\video\models\query\VideoQuery;
 use Yii;
-use yii\db\ActiveRecord;
 
 class VideoTable extends \yii\db\ActiveRecord
 {
     const STATUS_DISABLED = 0;
     const STATUS_PUBLISHED = 1;
+
+    const VIDEO_YOUTUBE = 1;
+    const VIDEO_SOURCE = 2;
 
     public static function tableName()
     {

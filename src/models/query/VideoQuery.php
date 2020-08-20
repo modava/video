@@ -27,6 +27,7 @@ class VideoQuery extends \yii\db\ActiveQuery
     }
     public function findByLanguage()
     {
-        return $this->andWhere([Video::tableName() . '.language' => \Yii::$app->language]);
+        return $this->andWhere([Video::tableName() . '.language' => \Yii::$app->language])
+            ->orWhere([Video::tableName() . '.language' => '']);
     }
 }

@@ -21,6 +21,8 @@ use yii\web\Response;
  * @property int $id
  * @property string $title
  * @property string $slug
+ * @property string $link
+ * @property int $type
  * @property int $video_type
  * @property int $video_category
  * @property string $image
@@ -82,11 +84,11 @@ class Video extends VideoTable
     public function rules()
     {
         return [
-            [['title', 'slug'], 'required'],
-            [['video_type', 'video_category', 'position', 'status', 'views', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['title'], 'required'],
+            [['type', 'video_type', 'video_category', 'position', 'status', 'views', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['description', 'content', 'ads_pixel', 'ads_session'], 'string'],
-            [['title', 'slug', 'image'], 'string', 'max' => 255],
-            [['language'], 'string', 'max' => 2],
+            [['title', 'slug', 'link', 'image'], 'string', 'max' => 255],
+            [['language'], 'string', 'max' => 25],
             [['slug'], 'unique'],
             [['video_category'], 'exist', 'skipOnError' => true, 'targetClass' => VideoCategory::class, 'targetAttribute' => ['video_category' => 'id']],
             [['video_type'], 'exist', 'skipOnError' => true, 'targetClass' => VideoType::class, 'targetAttribute' => ['video_type' => 'id']],
@@ -104,6 +106,8 @@ class Video extends VideoTable
             'id' => VideoModule::t('video', 'ID'),
             'title' => VideoModule::t('video', 'Title'),
             'slug' => VideoModule::t('video', 'Slug'),
+            'link' => VideoModule::t('video', 'Link'),
+            'type' => VideoModule::t('video', 'Nguồn'),
             'video_type' => VideoModule::t('video', 'Video Type'),
             'video_category' => VideoModule::t('video', 'Video Category'),
             'image' => VideoModule::t('video', 'Image'),

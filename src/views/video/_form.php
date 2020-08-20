@@ -26,6 +26,14 @@ use modava\video\models\table\VideoTypeTable;
             </div>
         </div>
         <div class="row">
+            <div class="col-8">
+                <?= $form->field($model, 'link')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-4">
+                <?= $form->field($model, 'type')->dropDownList(Yii::$app->getModule('video')->params['type']) ?>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-6">
                 <?= $form->field($model, 'video_category')
                     ->dropDownList(ArrayHelper::map(VideoCategoryTable::getAllVideoCategory($model->language), 'id', 'title'), ['prompt' => VideoModule::t('video', 'Chọn danh mục...')])
