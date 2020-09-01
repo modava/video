@@ -90,20 +90,20 @@ class VideoType extends VideoTypeTable
     public function attributeLabels()
     {
         return [
-            'id' => VideoModule::t('video', 'ID'),
-            'title' => VideoModule::t('video', 'Title'),
-            'slug' => VideoModule::t('video', 'Slug'),
-            'image' => VideoModule::t('video', 'Image'),
-            'description' => VideoModule::t('video', 'Description'),
-            'position' => VideoModule::t('video', 'Position'),
-            'ads_pixel' => VideoModule::t('video', 'Ads Pixel'),
-            'ads_session' => VideoModule::t('video', 'Ads Session'),
-            'status' => VideoModule::t('video', 'Status'),
-            'language' => VideoModule::t('video', 'Language'),
-            'created_at' => VideoModule::t('video', 'Created At'),
-            'updated_at' => VideoModule::t('video', 'Updated At'),
-            'created_by' => VideoModule::t('video', 'Created By'),
-            'updated_by' => VideoModule::t('video', 'Updated By'),
+            'id' => Yii::t('backend', 'ID'),
+            'title' => Yii::t('backend', 'Title'),
+            'slug' => Yii::t('backend', 'Slug'),
+            'image' => Yii::t('backend', 'Image'),
+            'description' => Yii::t('backend', 'Description'),
+            'position' => Yii::t('backend', 'Position'),
+            'ads_pixel' => Yii::t('backend', 'Ads Pixel'),
+            'ads_session' => Yii::t('backend', 'Ads Session'),
+            'status' => Yii::t('backend', 'Status'),
+            'language' => Yii::t('backend', 'Language'),
+            'created_at' => Yii::t('backend', 'Created At'),
+            'updated_at' => Yii::t('backend', 'Updated At'),
+            'created_by' => Yii::t('backend', 'Created By'),
+            'updated_by' => Yii::t('backend', 'Updated By'),
         ];
     }
 

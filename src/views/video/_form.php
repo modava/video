@@ -22,7 +22,7 @@ use modava\video\models\table\VideoTypeTable;
                 <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
             </div>
             <div class="col-4">
-                <?= $form->field($model, 'language')->dropDownList(Yii::$app->params['availableLocales'], ['prompt' => VideoModule::t('video', 'Chọn ngôn ngữ...')]) ?>
+                <?= $form->field($model, 'language')->dropDownList(Yii::$app->params['availableLocales'], ['prompt' => Yii::t('backend', 'Chọn ngôn ngữ...')]) ?>
             </div>
         </div>
         <div class="row">
@@ -36,14 +36,14 @@ use modava\video\models\table\VideoTypeTable;
         <div class="row">
             <div class="col-6">
                 <?= $form->field($model, 'video_category')
-                    ->dropDownList(ArrayHelper::map(VideoCategoryTable::getAllVideoCategory($model->language), 'id', 'title'), ['prompt' => VideoModule::t('video', 'Chọn danh mục...')])
-                    ->label(VideoModule::t('video', 'Danh mục')) ?>
+                    ->dropDownList(ArrayHelper::map(VideoCategoryTable::getAllVideoCategory($model->language), 'id', 'title'), ['prompt' => Yii::t('backend', 'Chọn danh mục...')])
+                    ->label(Yii::t('backend', 'Danh mục')) ?>
 
             </div>
             <div class="col-6">
                 <?= $form->field($model, 'video_type')
-                    ->dropDownList(ArrayHelper::map(VideoTypeTable::getAllVideoType($model->language), 'id', 'title'), ['prompt' => VideoModule::t('video', 'Chọn thể loại...')])
-                    ->label(VideoModule::t('video', 'Thể loại')) ?>
+                    ->dropDownList(ArrayHelper::map(VideoTypeTable::getAllVideoType($model->language), 'id', 'title'), ['prompt' => Yii::t('backend', 'Chọn thể loại...')])
+                    ->label(Yii::t('backend', 'Thể loại')) ?>
             </div>
         </div>
 
@@ -66,13 +66,13 @@ use modava\video\models\table\VideoTypeTable;
             'model' => $model,
             'attribute' => 'image',
             'path' => $path,
-            'label' => VideoModule::t('video', 'Hình ảnh') . ': ' . Yii::$app->params['video-size'],
+            'label' => Yii::t('backend', 'Hình ảnh') . ': ' . Yii::$app->params['video-size'],
         ]); ?>
 
         <?php if (Yii::$app->controller->action->id == 'create') $model->status = 1; ?>
         <?= $form->field($model, 'status')->checkbox() ?>
         <div class="form-group">
-            <?= Html::submitButton(VideoModule::t('video', 'Save'), ['class' => 'btn btn-success']) ?>
+            <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-success']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>

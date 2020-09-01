@@ -2,19 +2,20 @@
 
 namespace modava\video\controllers;
 
+use backend\components\MyComponent;
 use modava\video\components\MyUpload;
+use modava\video\components\MyVideoController;
+use modava\video\models\search\VideoSearch;
 use modava\video\models\table\VideoCategoryTable;
 use modava\video\models\table\VideoTypeTable;
-use yii\db\Exception;
+use modava\video\models\Video;
+use modava\video\VideoModule;
 use Yii;
+use yii\db\Exception;
+use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
-use modava\video\VideoModule;
-use modava\video\components\MyVideoController;
-use modava\video\models\Video;
-use modava\video\models\search\VideoSearch;
 use yii\web\Response;
 
 /**
@@ -46,9 +47,12 @@ class VideoController extends MyVideoController
         $searchModel = new VideoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $totalPage = $this->getTotalPage($dataProvider);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'totalPage' => $totalPage,
         ]);
     }
 
@@ -231,6 +235,33 @@ class VideoController extends MyVideoController
     }
 
     /**
+     * @param $perpage
+     */
+    public function actionPerpage($perpage)
+    {
+        MyComponent::setCookies('pageSize', $perpage);
+    }
+
+    /**
+     * @param $dataProvider
+     * @return float|int
+     */
+    public function getTotalPage($dataProvider)
+    {
+        if (MyComponent::hasCookies('pageSize')) {
+            $dataProvider->pagination->pageSize = MyComponent::getCookies('pageSize');
+        } else {
+            $dataProvider->pagination->pageSize = 10;
+        }
+
+        $pageSize = $dataProvider->pagination->pageSize;
+        $totalCount = $dataProvider->totalCount;
+        $totalPage = (($totalCount + $pageSize - 1) / $pageSize);
+
+        return $totalPage;
+    }
+
+    /**
      * Finds the Video model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
@@ -245,6 +276,6 @@ class VideoController extends MyVideoController
             return $model;
         }
 
-        throw new NotFoundHttpException(VideoModule::t('video', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Yii::t('backend', 'The requested page does not exist.'));
     }
 }

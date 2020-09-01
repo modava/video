@@ -24,7 +24,7 @@ return [
     'Video Categories' => 'Danh mục video',
     'Video category' => 'Danh mục video',
     'Title' => 'Tiêu đề',
-    'Image' => 'Hình ảnh',
+    'Image' => 'Hình',
     'Description' => 'Mô tả',
     'Position' => 'Vị trí',
 ];

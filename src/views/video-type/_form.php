@@ -18,7 +18,7 @@ use modava\video\VideoModule;
             <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-4">
-            <?= $form->field($model, 'language')->dropDownList(Yii::$app->params['availableLocales'], ['prompt' => VideoModule::t('video', 'Chọn ngôn ngữ...')]) ?>
+            <?= $form->field($model, 'language')->dropDownList(Yii::$app->params['availableLocales'], ['prompt' => Yii::t('backend', 'Chọn ngôn ngữ...')]) ?>
         </div>
     </div>
 
@@ -35,14 +35,14 @@ use modava\video\VideoModule;
         'model' => $model,
         'attribute' => 'image',
         'path' => $path,
-        'label' => VideoModule::t('video', 'Hình ảnh') . ': ' . Yii::$app->params['video-type-size'],
+        'label' => Yii::t('backend', 'Hình ảnh') . ': ' . Yii::$app->params['video-type-size'],
     ]); ?>
 
 
     <?php if (Yii::$app->controller->action->id == 'create') $model->status = 1; ?>
     <?= $form->field($model, 'status')->checkbox() ?>
     <div class="form-group">
-        <?= Html::submitButton(VideoModule::t('video', 'Save'), ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

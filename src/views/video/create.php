@@ -8,8 +8,8 @@ use modava\video\VideoModule;
 /* @var $this yii\web\View */
 /* @var $model modava\video\models\Video */
 
-$this->title = VideoModule::t('video', 'Create');
-$this->params['breadcrumbs'][] = ['label' => VideoModule::t('video', 'Videos'), 'url' => ['index']];
+$this->title = Yii::t('backend', 'Create');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Videos'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
