@@ -73,6 +73,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'language',
                             'value' => function ($model) {
+                                if ($model->language == null)
+                                    return null;
                                 return Yii::$app->params['availableLocales'][$model->language];
                             },
                         ],
