@@ -58,6 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attribute' => 'videoCategory.title',
                             'label' => Yii::t('backend', 'Danh mục')
                         ],
+                        'link',
                         [
                             'attribute' => 'image',
                             'format' => 'html',
