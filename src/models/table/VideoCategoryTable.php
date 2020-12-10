@@ -2,12 +2,12 @@
 
 namespace modava\video\models\table;
 
+use backend\components\MyModel;
 use cheatsheet\Time;
 use modava\video\models\query\VideoCategoryQuery;
 use Yii;
-use yii\db\ActiveRecord;
 
-class VideoCategoryTable extends \yii\db\ActiveRecord
+class VideoCategoryTable extends MyModel
 {
     const STATUS_DISABLED = 0;
     const STATUS_PUBLISHED = 1;

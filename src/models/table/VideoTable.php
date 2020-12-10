@@ -2,10 +2,11 @@
 
 namespace modava\video\models\table;
 
+use backend\components\MyModel;
 use modava\video\models\query\VideoQuery;
 use Yii;
 
-class VideoTable extends \yii\db\ActiveRecord
+class VideoTable extends MyModel
 {
     const STATUS_DISABLED = 0;
     const STATUS_PUBLISHED = 1;
